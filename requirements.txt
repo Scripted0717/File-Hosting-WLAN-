@@ -1,0 +1,8 @@
+pip install os 
+pip install json
+pip install zipfile36
+pip install qrcode
+pip install Pillow
+pip install Flask
+pip install Werkzeug
+pip install Flask-Login
