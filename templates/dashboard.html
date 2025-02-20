@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <h2>Welcome, {{ current_user.id }}</h2>
+
+        <!-- File Upload -->
+        <form action="/upload" method="POST" enctype="multipart/form-data" class="mt-3">
+            <input type="file" name="files" multiple class="form-control mb-2" required>
+            <button type="submit" class="btn btn-primary">Upload Files</button>
+        </form>
+
+        <!-- File List -->
+        <h3 class="mt-4">Your Files:</h3>
+        <ul class="list-group">
+            {% for file in files %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                        
+                        <!-- QR Code -->
+                        <img src="{{ url_for('get_qr', filename=file.filename) }}" alt="QR Code" width="80" class="me-3">
+
+                        <!-- Thumbnails / Icons -->
+                        {% if file.filename.lower().endswith((".png", ".jpg", ".jpeg", ".gif", ".bmp")) %}
+                            <img src="{{ url_for('download_file', filename=file.filename) }}" alt="Image Thumbnail" width="80" class="me-3">
+                        {% elif file.filename.lower().endswith((".mp3", ".wav", ".flac")) %}
+                            <img src="{{ url_for('static', filename='icons/audio.png') }}" alt="Audio File" width="80" class="me-3">
+                        {% elif file.filename.lower().endswith((".zip", ".rar", ".7z")) %}
+                            <img src="{{ url_for('static', filename='icons/zip.png') }}" alt="ZIP File" width="80" class="me-3">
+                        {% elif file.filename.lower().endswith((".pdf")) %}
+                            <img src="{{ url_for('static', filename='icons/pdf.png') }}" alt="PDF File" width="80" class="me-3">
+                        {% elif file.filename.lower().endswith((".txt", ".docx")) %}
+                            <img src="{{ url_for('static', filename='icons/text.png') }}" alt="Text File" width="80" class="me-3">
+                        {% else %}
+                            <img src="{{ url_for('static', filename='icons/file.png') }}" alt="File" width="80" class="me-3">
+                        {% endif %}
+                        
+                        <span>{{ file.filename }}</span>
+                    </div>
+                    <div>
+                        <!-- Download Button -->
+                        <a href="{{ url_for('download_file', filename=file.filename) }}" class="btn btn-success btn-sm">Download</a>
+
+                        <!-- Delete Button -->
+                        <form action="{{ url_for('delete_file', filename=file.filename) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this file?');">Delete</button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <!-- Logout -->
+        <a href="/logout" class="btn btn-danger mt-3">Logout</a>
+    </div>
+</body>
+</html>
