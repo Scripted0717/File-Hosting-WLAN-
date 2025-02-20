@@ -10,7 +10,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-app.secret_key = "1c03c11d932ee4a0bfefa0eca6617210"
+app.secret_key = "your_secret_key_here" # use the secret_key_genrator.py to genrate your key
 
 # File storage setup
 UPLOAD_FOLDER = "uploads"
