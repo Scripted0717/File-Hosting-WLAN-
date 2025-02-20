@@ -11,6 +11,7 @@ from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key_here" # use the secret_key_genrator.py to genrate your key
+app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "your_default_secret_key")
 
 # File storage setup
 UPLOAD_FOLDER = "uploads"
@@ -289,4 +290,4 @@ def clean_file_list():
     save_files(updated_files)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=False)
