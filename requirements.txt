@@ -1,4 +1,3 @@
-pip install json
 pip install zipfile36
 pip install qrcode
 pip install Pillow
