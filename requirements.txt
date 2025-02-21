@@ -3,3 +3,4 @@ qrcode
 zipfile36
 Pillow
 Flask
+flask-login
