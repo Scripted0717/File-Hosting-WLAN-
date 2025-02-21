@@ -1,2 +1,5 @@
 gunicorn
-
+qrcode
+zipfile36
+re
+Pillow
